@@ -1,0 +1,50 @@
+import placecollection
+import place
+class TravelApp(placecollection.PlaceCollection,place.Place):
+    def __init__(self,file):
+        super().__init__(file)                                  #To initialize the parent class
+
+
+if __name__=='__main__':
+    App=TravelApp('places.csv')                         #creating the object of Travellapp class
+    print('{:^150s}'.format("Welcome to Travel Tracker 2.0"))
+    while True:
+        print("Please select the option:\n 1:Display Places \n 2:Sort Data \n 3:Add Places \n 4:Change visit status \n")
+        print("Enter the option value:")
+        option=input()
+        if option=='1':
+            App.load_places()                                           #display places
+        elif option=='2':
+            print('Sort using:\n 1:name \n 2:country \n3:Priority')
+            n=int(input('enter the option:'))    #sort data
+            if n==1:
+                App.sort_data(0)
+            elif n==2:
+                App.sort_data(1)
+            elif n==3:
+                App.sort_data(2)
+            else:
+                print('Not a valid option')
+
+        elif option=='3':
+            App.load_places()
+            name=input("Enter Place:")     #add place
+            country=input("Enter the Country")
+            priority=input("Enter the priority")
+            if name=='' or country=='' or priority=='':
+                print('All fields must be completed')
+            else:
+                if priority.isnumeric():
+                    App.add_place(name,country,priority)
+                else:
+                    print('Priority must be>0')
+
+        elif option == '4':
+            name = input('Enter the place of place visited:')       #change visit status
+            visted = input('Option V-Visited \n N-Not visited:')
+            App.change_visited_status(name, visted)
+        else:
+            print("Enter the correct option\n")
+        exit=input("Do you want to continue?(y/n)")
+        if exit=='n':
+            break
